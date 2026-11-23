@@ -1,0 +1,8 @@
+case,status,reason
+"upright, all joints visible",steady,torso line vertical
+"lying (90 deg), all visible",fallen,torso line shallow (|slope|=0.00)
+"lying, knees hidden",fallen,torso line shallow (|slope|=0.00)
+"lying, one shoulder hidden",fallen,inverted: legs above shoulders
+"lying, both hips hidden",unknown,shoulders or hips not visible
+"upright, both hips hidden",unknown,shoulders or hips not visible
+upside down (180 deg),fallen,inverted: legs above shoulders
