@@ -39,13 +39,6 @@ There is no labelled video in this repo, so no accuracy number is claimed. Inste
 
 A sound next step is to evaluate on a labelled fall dataset and add a temporal rule (a steady-to-fallen transition within about a second, followed by stillness).
 
-## Changes from the earlier repo
-
-This repo replaces `YOLO-Falling-Detection`.
-
-- The logic moved out of a 250-line video script into testable functions.
-- **The inverted-posture check was changed.** It originally compared the knees against the lowest torso joint, including hips, so a person *sitting* with raised knees was flagged as fallen. It now compares against the shoulders, and a test covers the sitting case.
-
 ## Run it
 
 The rule and tests need only numpy:

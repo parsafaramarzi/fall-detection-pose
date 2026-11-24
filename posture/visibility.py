@@ -1,10 +1,9 @@
 """Which body joints did the pose model fail to see?
 
-This replaces the earlier "amputee / disabled person" detector. A low-confidence
-joint almost always means occlusion, a crop at the frame edge or a bad frame,
-not a missing limb, so labelling people from it is not valid. What the signal
-*is* good for is a data-quality flag: how much of this person can the other
-rules (fall, movement) trust?
+A low-confidence joint almost always means occlusion, a crop at the frame edge
+or a bad frame, not a missing limb, so it must not be used to label people.
+What the signal *is* good for is a data-quality flag: how much of this person
+can the fall rule trust?
 """
 from .keypoints import BODY_JOINTS, NAMES
 
