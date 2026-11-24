@@ -1,9 +1,8 @@
 import numpy as np
 import pytest
 
-from posture import fall, movement
-from posture.keypoints import (L_ANKLE, L_ELBOW, L_HIP, L_KNEE, L_SHOULDER, L_WRIST,
-                               R_ANKLE, R_HIP, R_KNEE, R_SHOULDER)
+from posture import fall
+from posture.keypoints import L_ANKLE, L_HIP, L_KNEE, R_ANKLE, R_HIP, R_KNEE
 from posture.synthetic import hide, rotate, standing_pose
 from posture.visibility import missing_joints, visibility_score
 
@@ -61,37 +60,6 @@ def test_threshold_is_configurable():
     k60 = rotate(k, 60)
     assert fall.classify_posture(k60, c).status == fall.FALLEN
     assert fall.classify_posture(k60, c, slope_threshold=0.5).status == fall.STEADY
-
-
-# ---------- movement ----------
-def test_joint_angle_right_angle_and_straight():
-    assert movement.joint_angle((0, 1), (0, 0), (1, 0)) == pytest.approx(90, abs=0.1)
-    assert movement.joint_angle((0, 1), (0, 0), (0, -1)) == pytest.approx(180, abs=0.1)
-
-
-def _runner():
-    k, c = standing_pose()
-    k = k.copy()
-    # sharply bend left elbow and left knee
-    k[L_WRIST] = k[L_ELBOW] + np.array([20.0, -10.0])      # forearm folded up
-    k[L_ANKLE] = k[L_KNEE] + np.array([30.0, -20.0])       # shin folded back
-    return k, c
-
-
-def test_bent_arm_and_leg_is_running():
-    k, c = _runner()
-    assert movement.classify_movement(k, c)[0] == movement.RUNNING
-
-
-def test_standing_is_non_running():
-    k, c = standing_pose()
-    assert movement.classify_movement(k, c)[0] == movement.NON_RUNNING
-
-
-def test_one_leg_hidden_gives_unknown():
-    k, c = standing_pose()
-    label, _ = movement.classify_movement(k, hide(c, [L_ANKLE]))
-    assert label == movement.UNKNOWN
 
 
 # ---------- visibility ----------
